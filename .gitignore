@@ -1,4 +1,6 @@
+/.vagrant/
 /vendor/
 /logs/*
 !/logs/README.md
 *.log
+composer.phar
