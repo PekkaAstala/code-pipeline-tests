@@ -33,7 +33,8 @@
 	"scripts": {
         "start": "php -S 0.0.0.0:8080 -t public public/index.php",
         "test": "vendor/bin/phpunit",
-        "phinx": "vendor/bin/phinx"
+        "phinx": "vendor/bin/phinx",
+        "package": "zip -r package.zip migrations public src templates tests composer.json LICENSE phinx.php phpunit.xml README.md"
 	}
 
 }
