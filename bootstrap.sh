@@ -1,19 +1,13 @@
 #!/usr/bin/env bash
 
-debconf-set-selections <<< 'mysql-server mysql-server/root_password password timelord'
-debconf-set-selections <<< 'mysql-server mysql-server/root_password_again password timelord'
-
 apt-get update
-apt-get install -y mysql-server apache2 php7.0 libapache2-mod-php php-xml php-mysql php-mbstring zip unzip
+apt-get install -y apache2 php7.0 libapache2-mod-php curl php-curl zip unzip
 
-cat /vagrant/.env >> .bashrc
-cat /vagrant/.env >> /etc/apache2/envvars
+rm -rf /var/www/html && ln -s /vagrant /var/www/html
+sed -i 's/www-user/vagrant/g' /etc/apache2/envvars
+service apache2 stop
+service apache2 start
 
-cd /vagrant && wget https://raw.githubusercontent.com/composer/getcomposer.org/1b137f8bf6db3e79a38a5bc45324414a6b1f9df2/web/installer -O - -q | php -- --quiet
-
-service mysql start
-mysql -u root -ptimelord -e "create database quotesdb"
-
-rm -rf /var/www/html && ln -s /vagrant/public /var/www/html
-
-service apache2 restart
+cd /vagrant
+curl -sS https://getcomposer.org/installer | php
+php composer.phar install
