@@ -2,4 +2,9 @@
 
 require '../vendor/autoload.php';
 
-echo "hello world";
+use Aws\Sns\SnsClient;
+
+$client = SnsClient::factory(array(
+    'profile' => '<profile in your aws credentials file>',
+    'region'  => '<region name>'
+));
